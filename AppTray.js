@@ -4,7 +4,7 @@ class AppTray extends Tray {
   constructor(icon, mainWindow) {
     super(icon);
 
-    this.setToolTip('GeneSys');
+    this.setToolTip("GeneSys");
     this.mainWindow = mainWindow;
 
     this.on("click", this.onClick.bind(this));

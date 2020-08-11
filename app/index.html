@@ -18,6 +18,7 @@
         <ul>
           <li><strong>CPU Usage: </strong><span id="cpu-usage"></span></li>
           <li><strong>CPU Free: </strong><span id="cpu-free"></span></li>
+          <li><strong>CPU Count: </strong><span id="cpu-count"></span></li>
         </ul>
         <div id="cpu-model"></div>
       </div>
@@ -26,9 +27,20 @@
         <h1><i class="fas fa-info-circle"></i> System Info</h1>
         <ul>
           <li><strong>Computer Name: </strong><span id="comp-name"></span></li>
+          <li><strong>Original OS: </strong><span id="orig-os"></span></li>
           <li><strong>OS: </strong><span id="os"></span></li>
           <li><strong>System Uptime: </strong><span id="sys-uptime"></span></li>
-          <li><strong>System Memory: </strong><span id="mem-total"></span></li>
+          <li><strong>IP Address: </strong><span id="ip-address"></span></li>
+        </ul>
+      </div>
+
+      <div class="content">
+        <h1><i class="fas fa-memory"></i></i></i> Memory Info</h1>
+        <ul>
+          <li><strong>System Used Memory: </strong><span id="mem-used"></span></li>
+          <li><strong>System Free Memory: </strong><span id="mem-free"></span></li>
+          <li><strong>Driver Used Memory: </strong><span id="driver-used"></span></li>
+          <li><strong>Driver Free Memory: </strong><span id="driver-free"></span></li>
         </ul>
       </div>
 
@@ -57,7 +69,11 @@
         </li>
         <li>
           <i class="fas fa-info-circle"></i>
-          <p>System Info</p>
+          <p>System</p>
+        </li>
+        <li>
+          <i class="fas fa-memory"></i>
+          <p>Memory</p>
         </li>
         <li>
           <i class="fas fa-cog"></i>

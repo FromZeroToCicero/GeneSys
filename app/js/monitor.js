@@ -1,16 +1,22 @@
 const path = require("path");
 const osu = require("node-os-utils");
 const { ipcRenderer } = require("electron");
-const { cpu, mem, os } = osu;
+const { cpu, mem, os, drive, proc } = osu;
 
-const cpuModel = document.getElementById("cpu-model");
+const cpuProgress = document.getElementById("cpu-progress");
 const cpuUsage = document.getElementById("cpu-usage");
 const cpuFree = document.getElementById("cpu-free");
-const cpuProgress = document.getElementById("cpu-progress");
+const cpuCount = document.getElementById("cpu-count");
+const cpuModel = document.getElementById("cpu-model");
 const computerName = document.getElementById("comp-name");
+const originalOs = document.getElementById("orig-os");
 const osSystem = document.getElementById("os");
-const totalMemory = document.getElementById("mem-total");
 const systemUptime = document.getElementById("sys-uptime");
+const ipAddress = document.getElementById("ip-address");
+const systemUsedMemory = document.getElementById("mem-used");
+const systemFreeMemory = document.getElementById("mem-free");
+const driverUsedMemory = document.getElementById("driver-used");
+const driverFreeMemory = document.getElementById("driver-free");
 
 let cpuOverload;
 let alertFrequency;
@@ -24,16 +30,22 @@ ipcRenderer.on("settings:get", (e, settings) => {
 // Set CPU Model
 cpuModel.innerText = cpu.model();
 
+// Set CPU Count
+cpuCount.innerText = cpu.count();
+
 // Set computer name
 computerName.innerText = os.hostname();
+
+// Set original OS
+os.oos().then((info) => {
+  originalOs.innerText = info;
+});
 
 // Set OS
 osSystem.innerText = `${os.type()} ${os.arch()}`;
 
-// Set total memory available
-mem.info().then((info) => {
-  totalMemory.innerText = `${info.totalMemMb} MB`;
-});
+// Set IP Address
+ipAddress.innerText = os.ip();
 
 // Run every 2 seconds
 setInterval(() => {
@@ -68,6 +80,18 @@ setInterval(() => {
 
   // System uptime
   systemUptime.innerText = formatUptime(os.uptime());
+
+  // Set memory used and free
+  mem.info().then((info) => {
+    systemUsedMemory.innerText = `${info.usedMemMb} MB`;
+    systemFreeMemory.innerText = `${info.freeMemMb} MB`;
+  });
+
+  // Set drive space used and free
+  drive.info().then((info) => {
+    driverUsedMemory.innerText = `${info.usedGb} GB`;
+    driverFreeMemory.innerText = `${info.freeGb} GB`;
+  });
 }, 2000);
 
 // Show uptime formatted as days,hours,mins,sec
@@ -86,7 +110,7 @@ function notifyUser(options) {
 }
 
 // Check how much time has passed from last notification
-function runNotify(frequency) {
+function runNotify(alertFrequency) {
   if (localStorage.getItem("lastNotify") === null) {
     localStorage.setItem("lastNotify", +new Date());
     return true;
