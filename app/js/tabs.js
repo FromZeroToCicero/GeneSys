@@ -14,12 +14,14 @@ listItems.forEach((item, index) => {
 
     // display content
     contents[index].classList.add("show");
+    contents[index].classList.remove("hide");
   });
 });
 
 function hideAllContents() {
   contents.forEach((content) => {
     content.classList.remove("show");
+    content.classList.add("hide");
   });
 }
 

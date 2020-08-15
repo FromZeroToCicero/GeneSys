@@ -62,13 +62,3 @@ app.on("window-all-closed", () => {
     app.quit();
   }
 });
-
-app.on("activate", () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createMainWindow();
-
-    mainWindow.webContents.on("dom-ready", () => {
-      mainWindow.webContents.send("settings:get", store.get("settings"));
-    });
-  }
-});
