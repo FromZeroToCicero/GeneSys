@@ -1,8 +1,89 @@
-function createMenuTemplate(isMac, isDev) {
+function createMenuTemplate(isMac, isDev, app, createAboutWindow, mainWindow) {
   return [
-    ...(isMac ? [{ role: "appMenu" }] : []),
+    ...(isMac
+      ? [
+          {
+            label: app.name,
+            submenu: [
+              {
+                label: "About GeneSys",
+                click: createAboutWindow,
+              },
+              {
+                type: "separator",
+              },
+              {
+                role: "hide",
+              },
+              {
+                role: "hideOthers",
+              },
+              {
+                role: "unhide",
+              },
+              {
+                type: "separator",
+              },
+              {
+                label: "Quit GeneSys",
+                click: () => app.quit(),
+              },
+            ],
+          },
+        ]
+      : []),
     {
-      role: "fileMenu",
+      label: "File",
+      submenu: [isMac ? { role: "close" } : { role: "quit" }],
+    },
+    {
+      label: "View",
+      submenu: [
+        { role: "reload" },
+        { role: "forcereload" },
+        { type: "separator" },
+        { role: "resetzoom" },
+        { role: "zoomin" },
+        { role: "zoomout" },
+        { type: "separator" },
+        { role: "togglefullscreen" },
+      ],
+    },
+    {
+      label: "Window",
+      submenu: [
+        {
+          role: "minimize",
+        },
+        ...(isMac
+          ? [
+              { role: "close" },
+              { type: "separator" },
+              { role: "front" },
+              { type: "separator" },
+              {
+                label: "GeneSys",
+                click: () => mainWindow.show(),
+              },
+            ]
+          : [{ role: "close" }]),
+      ],
+    },
+    {
+      role: "help",
+      submenu: [
+        {
+          label: "About GeneSys",
+          click: createAboutWindow,
+        },
+        {
+          label: "Learn More",
+          click: async () => {
+            const { shell } = require("electron");
+            await shell.openExternal("https://github.com/FromZeroToCicero/GeneSys");
+          },
+        },
+      ],
     },
     ...(isDev
       ? [
