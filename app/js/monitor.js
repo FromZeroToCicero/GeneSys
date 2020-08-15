@@ -1,7 +1,7 @@
 const path = require("path");
 const osu = require("node-os-utils");
 const { ipcRenderer } = require("electron");
-const { cpu, mem, os, drive, proc } = osu;
+const { cpu, mem, os, drive } = osu;
 
 const cpuProgress = document.getElementById("cpu-progress");
 const cpuUsage = document.getElementById("cpu-usage");

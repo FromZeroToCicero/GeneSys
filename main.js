@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, ipcMain } = require("electron");
+const { app, Menu, ipcMain } = require("electron");
 const path = require("path");
 
 const MainWindow = require("./MainWindow");
@@ -7,7 +7,7 @@ const Store = require("./Store");
 const { createMenuTemplate } = require("./Menu");
 
 // Set env
-process.env.NODE_ENV = "production";
+process.env.NODE_ENV = "development";
 
 const isDev = process.env.NODE_ENV !== "production" ? true : false;
 const isMac = process.platform === "darwin" ? true : false;
