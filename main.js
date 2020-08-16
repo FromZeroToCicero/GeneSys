@@ -31,8 +31,8 @@ function createMainWindow() {
 function createAboutWindow() {
   aboutWindow = new BrowserWindow({
     title: "About GeneSys",
-    width: 300,
-    height: 300,
+    width: 330,
+    height: 340,
     icon: `${__dirname}/assets/icons/icon.png`,
     resizable: isDev,
     backgroundColor: "#fff",
