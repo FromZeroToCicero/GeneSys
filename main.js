@@ -13,6 +13,7 @@ const isDev = process.env.NODE_ENV !== "production" ? true : false;
 const isMac = process.platform === "darwin" ? true : false;
 
 let mainWindow;
+let tray;
 
 const store = new Store({
   configName: "user-settings",
@@ -42,6 +43,10 @@ function createAboutWindow() {
 }
 
 app.on("ready", () => {
+  if (isMac) {
+    app.dock.hide();
+  }
+
   createMainWindow();
 
   mainWindow.webContents.on("dom-ready", () => {
@@ -60,9 +65,10 @@ app.on("ready", () => {
   });
 
   const icon = path.join(__dirname, "assets", "icons", "tray_icon.png");
-  new AppTray(icon, mainWindow);
+  tray = new AppTray(icon, mainWindow);
 
   mainWindow.on("closed", () => (mainWindow = null));
+  mainWindow.on("blur", () => (mainWindow.hide()));
 });
 
 ipcMain.on("settings:set", (e, settings) => {

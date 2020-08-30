@@ -8,6 +8,7 @@ class MainWindow extends BrowserWindow {
       height: 500,
       icon: `${__dirname}/assets/icons/icon.png`,
       resizable: isDev ? true : false,
+      skipTaskbar: true,
       opacity: 0.9,
       webPreferences: {
         nodeIntegration: true,
