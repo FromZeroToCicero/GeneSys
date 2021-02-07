@@ -1,8 +1,10 @@
 # GeneSys | Monitor your CPU
 
+<img src="./assets/app-screen.png" alt="GeneSys" width="300" />
+
 ## **Description**
 
-GeneSys is a new desktop application for CPU and system monitoring. This app offers valuable information about the CPU, as well as information about the current operating system and memory usage. You can modify in the settings tab the limit percentage of CPU usage and the frequency of notifications, in case the usage percentage passes the set limit.
+GeneSys is a new desktop application for CPU and system monitoring. This app offers valuable information about the CPU, as well as information about the current operating system and memory usage. You can modify in the settings tab the limit percentage of CPU usage and the frequency of alert notifications, in case the usage percentage passes the set limit.
 
 ## **Features**
 
@@ -12,7 +14,7 @@ GeneSys is a new desktop application for CPU and system monitoring. This app off
 - *Settings* tab: options to set the CPU Overload warning percentage and the alert frequency in minutes
 - Values set in the settings tab are stored as user settings and stay the same between app sessions
 - Displayed values for most CPU & System info are updated every 2 seconds
-- Even if the app window is closed, the app continues to work in the background, until the user explicitly right-clicks on the app tray icon and clicks "Quit"
+- Even if the app window is closed, the app continues to run in the background, until the user explicitly right-clicks on the app tray icon and clicks "Quit"
 
 ## **How to Contribute**
 

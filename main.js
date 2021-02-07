@@ -32,14 +32,16 @@ function createMainWindow() {
 function createAboutWindow() {
   aboutWindow = new BrowserWindow({
     title: "About GeneSys",
-    width: 330,
-    height: 340,
+    width: 430,
+    height: 420,
     icon: `${__dirname}/assets/icons/icon.png`,
     resizable: isDev,
     backgroundColor: "#fff",
   });
 
   aboutWindow.loadURL(`file://${__dirname}/app/about.html`);
+
+  aboutWindow.setMaximizable(false);
 }
 
 app.on("ready", () => {
@@ -48,6 +50,8 @@ app.on("ready", () => {
   }
 
   createMainWindow();
+
+  mainWindow.setMaximizable(false);
 
   mainWindow.webContents.on("dom-ready", () => {
     mainWindow.webContents.send("settings:get", store.get("settings"));
@@ -65,10 +69,9 @@ app.on("ready", () => {
   });
 
   const icon = path.join(__dirname, "assets", "icons", "tray_icon.png");
-  tray = new AppTray(icon, mainWindow);
+  tray = new AppTray(icon, mainWindow, createAboutWindow);
 
   mainWindow.on("closed", () => (mainWindow = null));
-  mainWindow.on("blur", () => (mainWindow.hide()));
 });
 
 ipcMain.on("settings:set", (e, settings) => {
