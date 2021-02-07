@@ -6,6 +6,8 @@
 
 GeneSys is a new desktop application for CPU and system monitoring. This app offers valuable information about the CPU, as well as information about the current operating system and memory usage. You can modify in the settings tab the limit percentage of CPU usage and the frequency of alert notifications, in case the usage percentage passes the set limit.
 
+**By default, when opening the application, it will not show any window. Instead, the app is being opened in the tray zone of the operating system. To view the app, click on the app tray icon.**
+
 ## **Features**
 
 - *CPU* tab: information about the current CPU usage percentage, CPU free percentage, CPU count and CPU model
