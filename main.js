@@ -1,10 +1,9 @@
-const { app, BrowserWindow, Menu, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 
 const MainWindow = require("./MainWindow");
 const AppTray = require("./AppTray");
 const Store = require("./Store");
-const { createMenuTemplate } = require("./Menu");
 
 // Set env
 process.env.NODE_ENV = "production";
@@ -32,8 +31,8 @@ function createMainWindow() {
 function createAboutWindow() {
   aboutWindow = new BrowserWindow({
     title: "About GeneSys",
-    width: 430,
-    height: 420,
+    width: isMac ? 430 : 450,
+    height: isMac ? 420 : 445,
     icon: `${__dirname}/assets/icons/icon.png`,
     resizable: isDev,
     backgroundColor: "#fff",
@@ -41,6 +40,7 @@ function createAboutWindow() {
 
   aboutWindow.loadURL(`file://${__dirname}/app/about.html`);
 
+  aboutWindow.removeMenu();
   aboutWindow.setMaximizable(false);
 }
 
@@ -52,13 +52,11 @@ app.on("ready", () => {
   createMainWindow();
 
   mainWindow.setMaximizable(false);
+  mainWindow.removeMenu();
 
   mainWindow.webContents.on("dom-ready", () => {
     mainWindow.webContents.send("settings:get", store.get("settings"));
   });
-
-  const mainMenu = Menu.buildFromTemplate(createMenuTemplate(isMac, isDev, app, createAboutWindow, mainWindow));
-  Menu.setApplicationMenu(mainMenu);
 
   mainWindow.on("close", (e) => {
     if (!app.isQuitting) {

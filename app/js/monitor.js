@@ -4,19 +4,27 @@ const { ipcRenderer } = require("electron");
 const { cpu, mem, os, drive } = osu;
 
 const cpuProgress = document.getElementById("cpu-progress");
+const cpuProgressContainer = document.getElementById("cpu-progress-container");
 const cpuUsage = document.getElementById("cpu-usage");
+const cpuUsageContainer = document.getElementById("cpu-usage-container");
 const cpuFree = document.getElementById("cpu-free");
+const cpuFreeContainer = document.getElementById("cpu-free-container");
 const cpuCount = document.getElementById("cpu-count");
 const cpuModel = document.getElementById("cpu-model");
 const computerName = document.getElementById("comp-name");
 const originalOs = document.getElementById("orig-os");
+const originalOsContainer = document.getElementById("orig-os-container");
 const osSystem = document.getElementById("os");
 const systemUptime = document.getElementById("sys-uptime");
 const ipAddress = document.getElementById("ip-address");
 const systemUsedMemory = document.getElementById("mem-used");
+const systemUsedMemoryContainer = document.getElementById("mem-used-container");
 const systemFreeMemory = document.getElementById("mem-free");
+const systemFreeMemoryContainer = document.getElementById("mem-free-container");
 const driverUsedMemory = document.getElementById("driver-used");
+const driverUsedMemoryContainer = document.getElementById("driver-used-container");
 const driverFreeMemory = document.getElementById("driver-free");
+const driverFreeMemoryContainer = document.getElementById("driver-free-container");
 
 let cpuOverload;
 let alertFrequency;
@@ -38,7 +46,13 @@ computerName.innerText = os.hostname();
 
 // Set original OS
 os.oos().then((info) => {
-  originalOs.innerText = info;
+  if (osu.isNotSupported(info)) {
+    originalOsContainer.style.display = "none";
+  } else {
+    originalOs.innerText = info;
+  }
+}).catch(err => {
+  originalOsContainer.style.display = "none";
 });
 
 // Set OS
@@ -71,12 +85,17 @@ setInterval(() => {
 
       localStorage.setItem("lastNotify", +new Date());
     }
+  }).catch(err => {
+    cpuUsageContainer.style.display = "none";
+    cpuProgressContainer.style.display = "none";
   });
 
   // CPU free
   cpu.free().then((info) => {
     cpuFree.innerText = `${info.toFixed(2)}%`;
-  });
+  }).catch(err => {
+    cpuFreeContainer.style.display = "none";
+  });;
 
   // System uptime
   systemUptime.innerText = formatUptime(os.uptime());
@@ -85,12 +104,18 @@ setInterval(() => {
   mem.info().then((info) => {
     systemUsedMemory.innerText = `${info.usedMemMb} MB`;
     systemFreeMemory.innerText = `${info.freeMemMb} MB`;
-  });
+  }).catch(err => {
+    systemUsedMemoryContainer.style.display = "none";
+    systemFreeMemoryContainer.style.display = "none";
+  });;
 
   // Set drive space used and free
   drive.info().then((info) => {
     driverUsedMemory.innerText = `${info.usedGb} GB`;
     driverFreeMemory.innerText = `${info.freeGb} GB`;
+  }).catch(err => {
+    driverUsedMemoryContainer.style.display = "none";
+    driverFreeMemoryContainer.style.display = "none";
   });
 }, 2000);
 
